@@ -5,8 +5,16 @@
     <title>Bank Account</title>
 </head>
 <body>
-    <h1> Welcome to your account page</h1>
+    <h1> Welcome, {{ request.user.username }}</h1>
 
+    {% if account %}
+    	<h2>Your account details:</h2>
+        <p><strong>Current Balance:</strong> ${{ account.balance }}</p>
+        <p><em>Account created on: {{ account.created_at_time }}</em></p>
+    {% else %}
+        <p>You do not have a back account with us yet.</p>
+    {% endif %} 
+    
     <hr>
 
     <form action="{% url "logout" %}" method="post">

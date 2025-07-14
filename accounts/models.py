@@ -8,4 +8,4 @@ class BankAccount(models.Model):
     created_at_time = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.User.username}'s Account (Balance: {self.balance}"
+        return f"{self.user.username}'s Account (Balance: {self.balance}"
