@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>Home</h1>
+
+    {% if user.is_authenticated %}
+        
+    <p>
+        <a href="{% url "account_detail" %}">Account details</a><hr>
+        <a href="{% url "deposit" %}">Deposit</a>
+    </p>
+        
+    <form action="{% url "logout" %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+        
+    {% else %}
+        <p><a href="{% url "login" %}">Login</a></p>
+    {% endif %}
+
+</body>
+</html>

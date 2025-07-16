@@ -17,6 +17,12 @@
     
     <hr>
 
+    <form action="{% url "deposit" %}" method="get">
+        <button type="bumit">Deposit money</button>
+    </form>
+    
+    <hr>
+    
     <form action="{% url "logout" %}" method="post">
         {% csrf_token %}
         <button type="submit">Logout</button>

@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import DepositForm
+from .models import  BankAccount
+from django.db import transaction
 from django.http import HttpResponse
 
 from accounts.models import BankAccount
@@ -19,3 +22,27 @@ def account_detail_view(request):
     }
     
     return render(request, "accounts/account_detail.html", context)
+
+@login_required
+def deposit_view(request):
+    
+    if request.method == "POST":
+        form = DepositForm(request.POST)
+        
+        if form.is_valid():
+            amount = form.cleaned_data["amount"]
+            
+            with transaction.atomic():
+                account = BankAccount.objects.select_for_update().get(user=request.user)
+                account.balance += amount
+                account.save()
+                
+                return redirect("account_detail")
+    else:
+        form = DepositForm();
+        
+    context = {
+        "form": form,
+    }
+        
+    return render(request, "accounts/deposit.html", context)
