@@ -11,7 +11,8 @@
     {% if user.is_authenticated %}
         
     <p>
-        <a href="{% url "account_detail" %}">Account details</a><hr>
+        <a href="{% url "account_detail" %}">Account details</a>
+        <hr>
         <a href="{% url "deposit" %}">Deposit</a>
     </p>
         
@@ -22,6 +23,8 @@
         
     {% else %}
         <p><a href="{% url "login" %}">Login</a></p>
+        <hr>
+        <a href="{% url "register" %}">Register</a>
     {% endif %}
 
 </body>

@@ -4,8 +4,9 @@ from .forms import DepositForm
 from .models import  BankAccount
 from django.db import transaction
 from django.http import HttpResponse
-
 from accounts.models import BankAccount
+from django.contrib.auth import login
+from .forms import RegistrationForm
 
 
 # Create your views here.
@@ -46,3 +47,25 @@ def deposit_view(request):
     }
         
     return render(request, "accounts/deposit.html", context)
+
+@transaction.atomic
+def registration_view(request):
+    
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        
+        if (form.is_valid()):
+            new_user = form.save()
+            BankAccount.objects.create(user=new_user, balance=0)
+            login(request, new_user)
+            return redirect("account_detail")
+    else:
+       form = RegistrationForm()
+            
+    context = {
+        "form": form
+    }
+    
+    return render(request, "accounts/register.html", context)
+        
+        

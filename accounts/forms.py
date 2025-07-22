@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class DepositForm(forms.Form):
     amount = forms.DecimalField(
@@ -8,4 +10,9 @@ class DepositForm(forms.Form):
         label = "Deposit Amount:"
     )
     
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
     
+    class Meta(UserCreationForm):
+        model = User
+        fields = ("username", "email")
